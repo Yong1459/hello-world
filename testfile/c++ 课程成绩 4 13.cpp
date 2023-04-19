@@ -1,42 +1,45 @@
-#include <iostream>
-#include <cstring>
-#include <cstdio>
+#include<iostream>
+#include<iomanip>
+#include<cstring>
 
 using namespace std;
 
-// 学生结构体
 struct Student {
-    char name[31];          // 学生姓名
-    double dailyGrade;      // 每日成绩
-    double finalGrade;      // 期末成绩
-    double totalGrade;      // 总成绩
+    char name[31];
+    double m;
+    double f;
+    double t;
 };
 
-
-void paixu(Student *students, int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (students[j].totalGrade < students[j+1].totalGrade) {
-                Student temp = students[j];
-                students[j] = students[j+1];
-                students[j+1] = temp;
+void paixu(Student a[], int n) {
+    for (int i=0; i<n-1; i++) {
+        for (int j=0; j<n-1-i; j++) {
+            if (a[j].t < a[j + 1].t) {
+                swap(a[j], a[j + 1]);
             }
         }
     }
 }
 
 int main() {
-    int n;
-    cin >> n;
-    Student students[100];   // 学生数组
-    for (int i = 0; i < n; i++) {
-        cin >> students[i].name >> students[i].dailyGrade >> students[i].finalGrade;
-        students[i].totalGrade = students[i].dailyGrade * 0.4 + students[i].finalGrade * 0.6; // 计算总成绩
+ 
+    Student b[101];
+    int n = 0;
+
+
+    while (cin >> b[n].name >> b[n].m >> b[n].f) {
+        b[n].t = b[n].m * 0.4 + b[n].f * 0.6 ;
+        n++;
     }
-    paixu(students, n); // 对学生数组按照总成绩排序
+
+
+    paixu(b, n);
+
+
     for (int i = 0; i < n; i++) {
-        printf("%s %.2f %.2f %.2f\n", students[i].name, students[i].dailyGrade, students[i].finalGrade, students[i].totalGrade);
+        cout <<fixed<<setprecision(2)<< b[i].name << " " << b[i].m << " " << b[i].f << " " << b[i].t << endl;
     }
+
     return 0;
 }
 
